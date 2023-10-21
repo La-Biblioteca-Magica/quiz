@@ -4,19 +4,19 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function getGPTResponse(userInput :QuizInput) {
+export async function getGPTResponse(userInput: QuizInput) {
   let response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
       {
         role: "system",
         content:
-          "Estás programado para recomendar libros basándote en las respuestas a un conjunto específico de preguntas. Al recibir las respuestas, tu objetivo es sugerir cinco libros que se adapten mejor a esas preferencias. Por favor, proporciona 5 recomendaciones literarias según las respuestas recibidas",
+          'Estás programado para recomendar libros basándote en las respuestas a un conjunto específico de preguntas. Al recibir las respuestas, tu objetivo es sugerir cinco libros que se adapten mejor a esas preferencias. Por favor, proporciona recomendaciones literarias en formato json en español tal que:\n\n[ {"book": "author" : "", "description": ""}]\n\nThe JSON object:\n`.trim()\n',
       },
       {
         role: "user",
-        content: JSON.stringify(userInput)
-      }
+        content: JSON.stringify(userInput),
+      },
     ],
     temperature: 0,
     max_tokens: 256,
@@ -24,8 +24,15 @@ export async function getGPTResponse(userInput :QuizInput) {
     frequency_penalty: 0,
     presence_penalty: 0,
   });
+  let books;
+  if (response.choices[0].message.content) {
+     books = JSON.parse(response.choices[0].message.content);
+  } else {
+    console.error("Content is null");
+    // Handle the null case accordingly
+  }
 
-  return response.choices[0];
+  return books;
 }
 
 // This code is for v4 of the openai package: npmjs.com/package/openai
