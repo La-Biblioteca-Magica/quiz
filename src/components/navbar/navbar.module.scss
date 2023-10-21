@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  width: 100%;
+  padding: calc(var(--spacing) * 1.5) var(--spacing);
+  justify-content: space-between;
+  align-items: center;
+
+  &__title {
+    color: var(--color, rgba(255, 255, 255, 0.78));
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration: none;
+  }
+}
