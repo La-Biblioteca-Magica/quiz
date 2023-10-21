@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from '@/components/navbar/navbar'
+import BackgroundMask from '@/components/background/background'
 
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body>
         <Navbar></Navbar>
         {children}
+        <BackgroundMask></BackgroundMask>
       </body>
     </html>
   )

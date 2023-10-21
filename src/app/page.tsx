@@ -1,7 +1,8 @@
 "use client"
 import Image from 'next/image'
-import styles from './page.module.css'
+import styles from './page.module.scss'
 import { getGPTResponse } from '@/components/GPT/getGPTResponse'
+import Button from '@/components/button/button';
 
 const userResponses: QuizInput = {
   genre: 'Fantasía',
@@ -20,9 +21,12 @@ const userResponses: QuizInput = {
 export default function Home() {
   return (
     <main className={styles.main}>
-      <button onClick={() => getGPTResponse(userResponses)}>
+      <img src="/logo.png" alt="Ilustracion de una biblioteca encantada" className={styles.main__logo} />
+      <h1 className={styles.main__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
+      <Button action={() => getGPTResponse(userResponses)} variant='secondary'>Empezar el test</Button>
+      {/* <button onClick={() => getGPTResponse(userResponses)}>
         clicka para hacer cosas pero no se muestra
-      </button>
+      </button> */}
     </main>
   )
 }
