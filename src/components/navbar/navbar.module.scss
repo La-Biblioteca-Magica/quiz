@@ -4,6 +4,10 @@
   padding: calc(var(--spacing) * 1.5) var(--spacing);
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
 
   &__title {
     color: var(--color, rgba(255, 255, 255, 0.78));

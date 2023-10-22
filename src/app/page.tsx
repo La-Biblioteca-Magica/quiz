@@ -23,55 +23,62 @@ const userResponses: QuizInput = {
 
 export default function Home() {
   const formRef = React.useRef<HTMLFormElement>(null);
+  const formQuestionsRef = React.useRef<HTMLDivElement>(null);
+  const [questions, setQuestions] = React.useState(FORM_QUESTIONS);
   const [formProgress, setFormProgress] = React.useState(0);
-  const [questions, setQuestions] = React.useState(FORM_QUESTIONS)
+  const [activeQuestion, setActiveQuestion] = React.useState(-1);
+  React.useEffect(() => {
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+  React.useEffect(() => {
+    if (!formQuestionsRef.current) return;
+    if (activeQuestion < 0) {
+      document.scrollingElement?.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    formQuestionsRef.current.children[activeQuestion]?.scrollIntoView({ behavior: 'smooth' });
+    setFormProgress(activeQuestion >= 0 ? (activeQuestion / questions.length) : 0);
+  }, [activeQuestion]);
+
   function handleBeginQuiz() {
-    console.log('eei')
     if (!formRef.current?.children.length) return;
-    formRef.current?.children[0]?.scrollIntoView({ behavior: 'smooth' });
-    console.log("👻 ~ handleBeginQuiz ~ formRef.current?.children[0]:", formRef.current?.children[0]);
-    console.log('adf')
-    setFormProgress((0) / questions.length);
+    setActiveQuestion(0);
   }
-  function handleOptionSelected(question: Question, option: string, index: number) {
-    console.log(question, option);
-    const children = formRef.current?.children;
-    if (!children || index >= questions.length) return;
-    children[index + 1].scrollIntoView({ behavior: 'smooth' });
-    setFormProgress((index + 1) / questions.length);
+  function handleOptionSelected(question: Question, option: string) {
+    setActiveQuestion(q => q + 1);
   }
-  function handleGoBack(index: number) {
-    const children = formRef.current?.children;
-    // TODO: MAYBE: Add little shake to goback button
-    if (!children || index <= 0) return;
-    children[index - 1].scrollIntoView({ behavior: 'smooth' });
-    setFormProgress((index - 1) / questions.length);
-  }
+  function handleGoBack() {
+    setActiveQuestion(q => q - 1);
+  };
+
   return (
     <main className={styles.main}>
-      <div className={styles.splash}>
+      <div className={styles.splash} id='start'>
         <Logo className={styles.splash__logo} />
         <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
         <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
       </div>
-      <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
-      <form className={styles.form} ref={formRef}>
-        {questions.map((question, index) => (
-          <section key={question.description} className={styles.form__section}>
-            <header>
-              <h1>{question.title}</h1>
-              <p>{question.description}</p>
-            </header>
-            <main>
-              {question.options?.map(option => (
-                <Button variant='secondary' action={() => handleOptionSelected(question, option, index)} key={option} className={styles.question}>{option}</Button>
-              ))}
-            </main>
-            <footer>
-              <Button variant='secondary' action={() => handleGoBack(index)} className={styles.form__section__back}>Atrás</Button>
-            </footer>
-          </section>
-        ))}
+      <form className={styles.form} ref={formRef} aria-visible={activeQuestion >= 0}>
+        <div className={styles.form__questions} ref={formQuestionsRef}>
+          {questions.map((question, index) => (
+            <section key={question.description} className={styles.form__section}>
+              <header>
+                <h1>{question.title}</h1>
+                <p>{question.description}</p>
+              </header>
+              <main>
+                {question.options?.map(option => (
+                  <Button variant='secondary' action={() => handleOptionSelected(question, option)} key={option} className={styles.question}>{option}</Button>
+                ))}
+              </main>
+            </section>
+          ))}
+        </div>
+        <footer>
+          <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
+          <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
+        </footer>
       </form>
     </main>
   )

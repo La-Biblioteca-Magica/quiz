@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400;500;600;700;800&display=swap');
 
 :root {
-  --color: hsla(0, 0%, 100%, .78);
-  --bg: #09091b;
+  --color: hsla(0, 0%, 100%, 0.78);
+  --raw-bg: 9, 9, 27;
+  --bg: rgb(var(--raw-bg));
   --bg-1: #272764;
   --spacing: 16px;
 }
@@ -15,6 +16,8 @@ html {
   margin: auto;
   font-family: 'Playpen Sans', system-ui, 'Segoe UI', Roboto, Cantarell,
     'Helvetica Neue', Helvetica, Arial, sans-serif;
+  overflow-y: hidden;
+  /* height: 100%; */
 }
 
 body {

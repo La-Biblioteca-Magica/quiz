@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="es">
       <body>
         <Navbar></Navbar>
-        {children}
+        <div style={{ paddingTop: 78, position: 'relative', zIndex: 1 }}>{children}</div>
         <BackgroundMask></BackgroundMask>
       </body>
     </html>
