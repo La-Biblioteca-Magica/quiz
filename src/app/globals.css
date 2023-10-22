@@ -3,6 +3,7 @@
 :root {
   --color: hsla(0, 0%, 100%, .78);
   --bg: #09091b;
+  --bg-1: #272764;
   --spacing: 16px;
 }
 
@@ -21,22 +22,6 @@ body {
   background-color: var(--bg);
   color: var(--color);
 
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 3em 0 1em;
-}
-
-p,
-ul,
-ol {
-  margin-bottom: 2em;
-  color: #1d1d1d;
 }
 
 small {

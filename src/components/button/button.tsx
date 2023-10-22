@@ -2,7 +2,7 @@
 import styles from './button.module.scss';
 import { ButtonVariant } from "./button.types";
 
-export default function Button({ action, children, variant }: { action: Function, children: React.ReactNode, variant?: ButtonVariant }) {
+export default function Button({ action, children, variant, className }: { action: Function, children: React.ReactNode, variant?: ButtonVariant, className?: string }) {
   function handleAction() {
     action();
   }
@@ -10,8 +10,8 @@ export default function Button({ action, children, variant }: { action: Function
 
     return `${styles.button} ${styles[variant || 'primary']}`
   }
-  return <div className={styles.wrapper}>
-    <button onClick={handleAction} className={classList()}>
+  return <div className={`${styles.wrapper} ${className ?? ''}`}>
+    <button onClick={handleAction} className={classList()} type='button'>
       <span className={styles.button__children}>
         {children}
       </span>

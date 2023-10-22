@@ -1,17 +1,20 @@
-.main {
+.splash {
   margin-block-start: 94px;
+  height: 100dvh;
 
   &__logo {
+    background: var(--bg-1);
     border-radius: 50%;
     object-fit: cover;
     height: auto;
     width: min(194px, 100%);
     margin-inline: auto;
     display: block;
+    padding: 12px;
   }
 
   &__title {
-    color: var(--Color-Primary, rgba(255, 255, 255, 0.78));
+    color: var(--color, rgba(255, 255, 255, 0.78));
     text-align: center;
     font-family: Playpen Sans;
     font-size: 32px;
@@ -20,5 +23,76 @@
     line-height: normal;
     margin-block: 0;
     margin-block: 16px;
+  }
+
+  &__action {
+    margin-inline: auto;
+  }
+}
+
+.form {
+  padding-inline: var(--spacing);
+
+  &__progress {
+
+    &::after,
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 12px;
+    }
+
+    &::after {
+      width: calc(var(--progress) * 100%);
+      background: var(--bg-1);
+      border-radius: 0 6px 6px 0;
+      transition: width 600ms ease;
+    }
+  }
+
+  &__progress::before {
+    width: 100%;
+    background: var(--bg);
+  }
+
+  &__section {
+    scroll-snap-align: start;
+    height: calc(100dvh - var(--spacing));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    header {
+      margin-block-start: 12px;
+
+      p {
+        opacity: 1;
+      }
+    }
+
+    main {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .question {
+        flex-grow: 1;
+
+        button {
+          padding-inline: 2px;
+        }
+      }
+    }
+
+    &__back,
+    &__back button {
+      width: 100%;
+    }
+
+    footer {
+      margin-top: auto;
+    }
   }
 }

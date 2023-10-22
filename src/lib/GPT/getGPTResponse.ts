@@ -1,7 +1,7 @@
 "use server";
 import OpenAI from "openai";
 
-const books = require("google-books-search"); //NPI de por que no me deja importar con import
+const books = require("google-books-search");
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
