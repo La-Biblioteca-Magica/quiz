@@ -7,7 +7,6 @@ export default function Button({ action, children, variant, className, active }:
     action();
   }
   function classList() {
-
     return `${styles.button} ${styles[variant || 'primary']}`
   }
   return <div className={`${styles.wrapper} ${className ?? ''}`}>

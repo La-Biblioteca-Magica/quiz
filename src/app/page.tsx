@@ -4,8 +4,9 @@ import { getGPTResponse } from '@/lib/GPT/getGPTResponse'
 import Button from '@/components/button/button';
 import Logo from '@/components/logo/logo';
 import { FORM_QUESTIONS } from '@/lib/quiz/quiz.questions';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Question } from '@/types/quiz/question.types';
+import TextInput from '@/components/textInput/textInput';
 
 const userResponses: QuizInput = {
   genre: 'Fantasía',
@@ -28,21 +29,21 @@ export default function Home() {
   const [questions, setQuestions] = React.useState(FORM_QUESTIONS);
   const [formProgress, setFormProgress] = React.useState(0);
   const [activeQuestion, setActiveQuestion] = React.useState(-1);
-  React.useEffect(() => {
+  useEffect(() => {
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     }
     if (!formRef.current) return;
     setFormData(new FormData(formRef.current));
   }, []);
-  React.useEffect(() => {
+  useEffect(() => {
     if (!formQuestionsRef.current) return;
     if (activeQuestion < 0) {
       document.scrollingElement?.scrollTo({ top: 0, behavior: 'smooth' });
     }
     formQuestionsRef.current.children[activeQuestion]?.scrollIntoView({ behavior: 'smooth' });
     setFormProgress(activeQuestion >= 0 ? (activeQuestion / questions.length) : 0);
-  }, [activeQuestion]);
+  }, [activeQuestion, questions.length]);
 
   function handleBeginQuiz() {
     if (!formRef.current?.children.length) return;
@@ -53,6 +54,11 @@ export default function Home() {
     console.log(formData?.get(question.id))
     setActiveQuestion(q => q + 1);
   }
+
+  function handleTextInput(question: Question, text: string) {
+    formData?.set(question.id, text);
+  }
+
   function handleGoBack() {
     setActiveQuestion(q => q - 1);
   };
@@ -77,9 +83,21 @@ export default function Home() {
                 <p>{question.description}</p>
               </header>
               <main>
-                {question.options?.map(option => (
-                  <Button variant='secondary' action={() => handleOptionSelected(question, option)} key={option} className={styles.question} active={isOptionActive(question, option)}>{option}</Button>
-                ))}
+                {question.options && question.options.length > 0 ? (
+                  question.options.map(option => (
+                    <Button
+                      variant='secondary'
+                      action={() => handleOptionSelected(question, option)}
+                      key={option}
+                      className={styles.question}
+                      active={isOptionActive(question, option)}
+                    >
+                      {option}
+                    </Button>
+                  ))
+                ) : (
+                  <TextInput onChange={(text) => handleTextInput(question, text)} onSubmit={(text) => handleOptionSelected(question, text)} />
+                )}
               </main>
               <input type="hidden" name={question.id} id={question.id} />
             </section>
