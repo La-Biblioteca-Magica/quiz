@@ -1,7 +1,12 @@
 "use server";
 import OpenAI from "openai";
+import { books } from "@googleapis/books";
 
-const books = require("google-books-search");
+const booksApi = books({
+  auth: process.env.GOOGLE_API_KEY,
+  version: "v1",
+  key: process.env.GOOGLE_API_KEY,
+});
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -68,18 +73,19 @@ export async function getGPTResponse(userInput: QuizInput) {
 
 async function searchBook(book: BookInfo) {
   const searchQuery = `${book.book} inauthor:${book.author}`;
-
-  const googleBooksResults = await new Promise((resolve, reject) => {
-    books.search(searchQuery, options, (error: unknown, results: unknown) => {
-      if (error) {
-        console.error("Google Books search error:", error);
-        reject(error);
-      } else {
-        console.log("Google Books search results:", results);
-        resolve(results);
-      }
+  let results;
+  try {
+    results = await booksApi.volumes.list({
+      q: searchQuery,
+      langRestrict: options.lang,
+      maxResults: options.limit,
+      orderBy: options.order === "relevance" ? "relevance" : undefined, // La API de Google Books solo admite 'relevance' y 'newest' para 'orderBy'
+      printType: options.type.toUpperCase(), // Convertir a mayúsculas, ya que la API espera 'BOOKS', 'MAGAZINES', etc.
+      key: options.key,
     });
-  });
+  } catch (error) {
+    console.log("Not found on google books", error);
+  }
 
-  return googleBooksResults;
+  return results;
 }
