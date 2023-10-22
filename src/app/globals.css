@@ -1,21 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400;500;600;700;800&display=swap');
+
 :root {
   --color: hsla(0, 0%, 100%, .78);
   --bg: #09091b;
+  --spacing: 16px;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
   margin: auto;
-  padding: 3em 1em;
-  font-family: system-ui, 'Segoe UI', Roboto, Cantarell,
+  font-family: 'Playpen Sans', system-ui, 'Segoe UI', Roboto, Cantarell,
     'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 1.25em;
-  line-height: 1.75;
 }
 
 body {
   margin: 0;
   background-color: var(--bg);
   color: var(--color);
+
 }
 
 h1,
