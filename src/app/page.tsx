@@ -23,6 +23,7 @@ const userResponses: QuizInput = {
 
 export default function Home() {
   const formRef = React.useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = React.useState<FormData | undefined>(undefined);
   const formQuestionsRef = React.useRef<HTMLDivElement>(null);
   const [questions, setQuestions] = React.useState(FORM_QUESTIONS);
   const [formProgress, setFormProgress] = React.useState(0);
@@ -31,6 +32,8 @@ export default function Home() {
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     }
+    if (!formRef.current) return;
+    setFormData(new FormData(formRef.current));
   }, []);
   React.useEffect(() => {
     if (!formQuestionsRef.current) return;
@@ -46,12 +49,18 @@ export default function Home() {
     setActiveQuestion(0);
   }
   function handleOptionSelected(question: Question, option: string) {
+    formData?.set(question.id, option);
+    console.log(formData?.get(question.id))
     setActiveQuestion(q => q + 1);
   }
   function handleGoBack() {
     setActiveQuestion(q => q - 1);
   };
 
+  function isOptionActive(question: Question, option: string) {
+    const response = formData?.get(question.id);
+    return response === option;
+  }
   return (
     <main className={styles.main}>
       <div className={styles.splash} id='start'>
@@ -59,7 +68,7 @@ export default function Home() {
         <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
         <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
       </div>
-      <form className={styles.form} ref={formRef} aria-visible={activeQuestion >= 0}>
+      <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0}>
         <div className={styles.form__questions} ref={formQuestionsRef}>
           {questions.map((question, index) => (
             <section key={question.description} className={styles.form__section}>
@@ -69,9 +78,10 @@ export default function Home() {
               </header>
               <main>
                 {question.options?.map(option => (
-                  <Button variant='secondary' action={() => handleOptionSelected(question, option)} key={option} className={styles.question}>{option}</Button>
+                  <Button variant='secondary' action={() => handleOptionSelected(question, option)} key={option} className={styles.question} active={isOptionActive(question, option)}>{option}</Button>
                 ))}
               </main>
+              <input type="hidden" name={question.id} id={question.id} />
             </section>
           ))}
         </div>

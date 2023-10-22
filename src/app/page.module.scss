@@ -33,7 +33,7 @@
 .form {
   padding-inline: var(--spacing);
 
-  &[aria-visible="true"] {
+  &[aria-hidden="false"] {
 
     footer {
       opacity: 1;
@@ -88,7 +88,7 @@
     right: 16px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 300ms ease;
@@ -105,7 +105,7 @@
         top: 0;
         left: 0;
         height: 12px;
-        border-radius: 6px;
+        border-radius: 3px;
       }
 
       &::after {

@@ -11,6 +11,7 @@
   display: flex;
   border: none;
   padding: calc(var(--spacing) * 0.5) calc(var(--spacing) * 1.5);
+  background: linear-gradient(248deg, #A065EB -2.85%, #06AD5D 112.07%);
   justify-content: center;
   align-items: center;
   font-family: inherit;
@@ -19,8 +20,8 @@
   cursor: pointer;
 
   &.secondary {
-    background-color: rgba(var(--raw-bg), var(--bg-opacity));
-    transition: background-color 150ms ease;
+    background: rgba(var(--raw-bg), var(--bg-opacity));
+    transition: background 150ms ease;
   }
 
   &__children {
@@ -37,7 +38,7 @@
   }
 
   &:active,
-  [aria-selected="true"] {
-    --bg-opacity: 0.80;
+  &[aria-selected="true"] {
+    --bg-opacity: 0.60;
   }
 }
