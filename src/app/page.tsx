@@ -56,6 +56,21 @@ export default function Home() {
     if (!formRef.current?.children.length) return;
     setActiveQuestion(0);
   }
+  function handleOptionDelete(question: Question, index: number) {
+    console.log(index);
+    // setAnswers(prev => prev.concat({ question, values } as unknown as Answer));
+    const existingAnswer = answers.findIndex(ans => ans.question.id === question.id);
+    if (existingAnswer < 0) return answers;
+    const filtered = answers[existingAnswer].options.filter((values, i) => index !== i);
+    const a = [...answers];
+    a[existingAnswer].options = filtered;
+    console.log("👻 ~ handleOptionDelete ~ a:", a);
+    // answers[existingAnswer].options = filtered;
+    // return answers;
+
+    setAnswers(a)
+
+  }
   function handleOptionSelected(question: Question, selectedOption: string) {
     setAnswers(prevAnswers => {
       const existingAnswer = prevAnswers.find(ans => ans.question.id === question.id);
@@ -88,10 +103,9 @@ export default function Home() {
     // setActiveQuestion(q => q + 1);
   }
 
-  function handleTextInput(question: Question, text: string) {
-    formData?.set(question.id, text);
-  }
-
+  function handleGoNext() {
+    setActiveQuestion(q => q + 1);
+  };
   function handleGoBack() {
     setActiveQuestion(q => q - 1);
   };
@@ -129,7 +143,7 @@ export default function Home() {
                     </Button>
                   ))
                 ) : (
-                  <TextInput onChange={(text) => handleTextInput(question, text)} onSubmit={(text) => handleOptionSelected(question, text)} options={{ multiple: true }} />
+                  <TextInput onSubmit={(values) => handleOptionSelected(question, values)} options={{ multiple: true }} onDelete={(index) => handleOptionDelete(question, index)} />
                 )}
               </main>
               <input type="hidden" name={question.id} id={question.id} />
@@ -138,6 +152,7 @@ export default function Home() {
         </div>
         <footer>
           <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
+          <Button variant='primary' action={handleGoNext} className={styles.form__section__next}>Siguiente</Button>
           <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
         </footer>
       </form>

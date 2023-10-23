@@ -4,7 +4,7 @@ import styles from './textInput.module.scss';
 import { useRef, useState } from 'react'
 type TextInputProps = {
   onSubmit: (value: string) => void;
-  onChange: (value: string) => void;
+  onDelete: (index: number) => void;
   value?: string;
   placeholder?: string;
   variant?: 'primary' | 'secondary';
@@ -14,25 +14,30 @@ type TextInputProps = {
 
 const MAX_CHARACTERS = 200;
 
-export default function TextInput({ value, placeholder, className, options, onSubmit, onChange }: TextInputProps) {
+export default function TextInput({ value, placeholder, className, options, onSubmit, onDelete }: TextInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [current, setCurrent] = useState("");
   const [answers, setAnswers] = useState<string[]>([]);
 
   function handleAddAnswer() {
+    if (!inputRef.current?.value) return;
+    if (answers.includes(inputRef.current.value)) return;
+
     setAnswers(answers.concat(current));
+    onSubmit(current);
     inputRef.current?.value ? inputRef.current.value = '' : undefined;
   }
   function handleInput() {
     if (!inputRef.current?.value) return;
 
     setCurrent(inputRef.current?.value);
-    onChange(inputRef.current?.value);
   }
   function handleRemoveAnswer(index: number) {
+    onDelete(index);
     setAnswers(answers.filter((answers, i) => i !== index));
   }
   function handleKeyDown(event: React.KeyboardEvent) {
+    if (!inputRef.current?.value) return;
     if (event.key === 'Enter') {
       handleAddAnswer();
     }
@@ -62,7 +67,7 @@ export default function TextInput({ value, placeholder, className, options, onSu
         {Boolean(answers.length) && answers.map((answer, index) => (
           <li key={answer}>
             <span>{answer}</span>
-            <span onClick={() => handleRemoveAnswer(index)}>x</span>
+            <span onClick={() => handleRemoveAnswer(index)} className={styles.close}>x</span>
           </li>
         ))}
       </ul>

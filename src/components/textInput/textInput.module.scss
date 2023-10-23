@@ -53,15 +53,25 @@
   li {
     border-radius: 3em;
     padding: 6px 18px;
+    padding-inline-end: 24px;
     background-color: var(--bg);
     display: flex;
     gap: 12px;
     justify-content: space-between;
     align-items: center;
     width: fit-content;
+    position: relative;
+
+    +li {
+      margin-block-start: 8px;
+    }
+
+    .close {
+      position: absolute;
+      top: -16px;
+      right: -2px;
+      font-size: 24px;
+    }
   }
 
-  li+li {
-    margin-block-start: 8px;
-  }
 }
