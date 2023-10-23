@@ -1,6 +1,6 @@
 'use client';
 import Button from '../button/button';
-import styles from './TextInput.module.scss';
+import styles from './textInput.module.scss';
 import { useState } from 'react'
 type TextInputProps = {
     onChange: (value: string) => void;
@@ -23,14 +23,16 @@ export default function TextInput({ onChange, value, placeholder, className, onS
     }
 
     return (
-        <div className={`${styles.wrapper} ${className ?? ''}`}>
-            <textarea
-                onChange={handleChange}
-                value={value}
-                className={styles.input}
-                placeholder={placeholder}
-                maxLength={maxWordsLenght}
-            />
+        <div className=''>
+            <div className={`${styles.wrapper} ${className ?? ''}`}>
+                <textarea
+                    onChange={handleChange}
+                    value={value}
+                    className={styles.input}
+                    placeholder={placeholder}
+                    maxLength={maxWordsLenght}
+                />
+            </div>
             <Button
                 variant='secondary'
                 action={() => onSubmit(value ?? "")}
