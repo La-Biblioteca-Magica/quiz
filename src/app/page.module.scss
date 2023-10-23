@@ -58,7 +58,7 @@
 
     main {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
       overflow-y: auto;
       padding-block-end: 80px;
@@ -96,6 +96,7 @@
       height: 12px;
       width: 100%;
       background: linear-gradient(248deg, #06AD5D -2.85%, #A065EB 112.07%);
+      border-radius: 3px;
 
       &::before {
         content: "";

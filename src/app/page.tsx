@@ -51,7 +51,6 @@ export default function Home() {
   }
   function handleOptionSelected(question: Question, option: string) {
     formData?.set(question.id, option);
-    console.log(formData?.get(question.id))
     setActiveQuestion(q => q + 1);
   }
 
@@ -96,7 +95,7 @@ export default function Home() {
                     </Button>
                   ))
                 ) : (
-                  <TextInput onChange={(text) => handleTextInput(question, text)} onSubmit={(text) => handleOptionSelected(question, text)} />
+                  <TextInput onChange={(text) => handleTextInput(question, text)} onSubmit={(text) => handleOptionSelected(question, text)} options={{ multiple: true }} />
                 )}
               </main>
               <input type="hidden" name={question.id} id={question.id} />

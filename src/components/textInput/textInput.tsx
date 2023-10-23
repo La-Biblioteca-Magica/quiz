@@ -1,45 +1,72 @@
 'use client';
 import Button from '../button/button';
 import styles from './textInput.module.scss';
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 type TextInputProps = {
-    onChange: (value: string) => void;
-    onSubmit: (value: string) => void;
-    value?: string;
-    placeholder?: string;
-    variant?: 'primary' | 'secondary';
-    className?: string;
+  onSubmit: (value: string) => void;
+  onChange: (value: string) => void;
+  value?: string;
+  placeholder?: string;
+  variant?: 'primary' | 'secondary';
+  className?: string;
+  options: { multiple?: boolean, max_answers?: number }
 }
 
-const maxWordsLenght = 200; //200 words max
+const MAX_CHARACTERS = 200;
 
-export default function TextInput({ onChange, value, placeholder, className, onSubmit }: TextInputProps) {
-    const [text, setText] = useState("");
+export default function TextInput({ value, placeholder, className, options, onSubmit, onChange }: TextInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [current, setCurrent] = useState("");
+  const [answers, setAnswers] = useState<string[]>([]);
 
-    function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        if (onChange) {
-            onChange(event.target.value);
-        }
+  function handleAddAnswer() {
+    setAnswers(answers.concat(current));
+    inputRef.current?.value ? inputRef.current.value = '' : undefined;
+  }
+  function handleInput() {
+    if (!inputRef.current?.value) return;
+
+    setCurrent(inputRef.current?.value);
+    onChange(inputRef.current?.value);
+  }
+  function handleRemoveAnswer(index: number) {
+    setAnswers(answers.filter((answers, i) => i !== index));
+  }
+  function handleKeyDown(event: React.KeyboardEvent) {
+    if (event.key === 'Enter') {
+      handleAddAnswer();
     }
-
-    return (
-        <div className=''>
-            <div className={`${styles.wrapper} ${className ?? ''}`}>
-                <textarea
-                    onChange={handleChange}
-                    value={value}
-                    className={styles.input}
-                    placeholder={placeholder}
-                    maxLength={maxWordsLenght}
-                />
-            </div>
-            <Button
-                variant='secondary'
-                action={() => onSubmit(value ?? "")}
-                className={styles.question}
-                active={true}
-            > Siguiente
-            </Button>
+  }
+  return (
+    <>
+      <div className={styles.wrapper}>
+        <div className={`${styles.input__wrapper} ${className ?? ''}`}>
+          <input
+            value={value}
+            className={styles.input}
+            placeholder={placeholder}
+            maxLength={MAX_CHARACTERS}
+            onInput={handleInput}
+            ref={inputRef}
+            onKeyDown={handleKeyDown}
+          />
         </div>
-    );
+        {options?.multiple && <Button
+          variant='secondary'
+          action={handleAddAnswer}
+          className={styles.button}
+        >+ Añadir
+        </Button>}
+      </div>
+      <ul className={styles.answers}>
+        {Boolean(answers.length) && answers.map((answer, index) => (
+          <li key={answer}>
+            <span>{answer}</span>
+            <span onClick={() => handleRemoveAnswer(index)}>x</span>
+          </li>
+        ))}
+      </ul>
+    </>
+
+  );
 }
