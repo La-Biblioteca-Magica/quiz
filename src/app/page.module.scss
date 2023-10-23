@@ -47,6 +47,7 @@
     flex-direction: column;
     gap: 12px;
     max-height: 100dvh;
+
     header {
       margin-block-start: 78px;
 
@@ -57,7 +58,7 @@
 
     main {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
       overflow-y: auto;
       padding-block-end: 80px;
@@ -94,26 +95,17 @@
       position: relative;
       height: 12px;
       width: 100%;
+      background: linear-gradient(248deg, #06AD5D -2.85%, #A065EB 112.07%);
 
-      &::after,
       &::before {
         content: "";
         position: absolute;
         top: 0;
-        left: 0;
+        right: 0;
         height: 12px;
-        border-radius: 3px;
-      }
-
-      &::after {
-        width: calc(var(--progress) * 100%);
-        background: var(--bg-1);
+        width: calc((1 - var(--progress)) * 100%);
+        background: rgba(var(--raw-bg), 1);
         transition: width 600ms ease;
-      }
-
-      &::before {
-        width: 100%;
-        background: rgba(var(--raw-bg), 0.95);
       }
     }
   }
