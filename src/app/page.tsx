@@ -57,16 +57,11 @@ export default function Home() {
     setActiveQuestion(0);
   }
   function handleOptionDelete(question: Question, index: number) {
-    console.log(index);
-    // setAnswers(prev => prev.concat({ question, values } as unknown as Answer));
     const existingAnswer = answers.findIndex(ans => ans.question.id === question.id);
     if (existingAnswer < 0) return answers;
     const filtered = answers[existingAnswer].options.filter((values, i) => index !== i);
     const a = [...answers];
     a[existingAnswer].options = filtered;
-    console.log("👻 ~ handleOptionDelete ~ a:", a);
-    // answers[existingAnswer].options = filtered;
-    // return answers;
 
     setAnswers(a)
 
@@ -104,7 +99,9 @@ export default function Home() {
   }
 
   function handleGoNext() {
-    setActiveQuestion(q => q + 1);
+    if (answers[activeQuestion] && answers[activeQuestion].options?.length) {
+      setActiveQuestion(q => q + 1);
+    } else { console.warn('no se pue') }
   };
   function handleGoBack() {
     setActiveQuestion(q => q - 1);
