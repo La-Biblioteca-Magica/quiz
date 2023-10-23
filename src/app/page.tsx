@@ -22,6 +22,11 @@ const userResponses: QuizInput = {
   previousBooks: 'El Señor de los Anillos'
 };
 
+type Answer = {
+  question: Question,
+  options: string[]
+}
+
 export default function Home() {
   const formRef = React.useRef<HTMLFormElement>(null);
   const [formData, setFormData] = React.useState<FormData | undefined>(undefined);
@@ -29,6 +34,8 @@ export default function Home() {
   const [questions, setQuestions] = React.useState(FORM_QUESTIONS);
   const [formProgress, setFormProgress] = React.useState(0);
   const [activeQuestion, setActiveQuestion] = React.useState(-1);
+  const [answers, setAnswers] = React.useState<Answer[]>([])
+
   useEffect(() => {
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
@@ -49,9 +56,36 @@ export default function Home() {
     if (!formRef.current?.children.length) return;
     setActiveQuestion(0);
   }
-  function handleOptionSelected(question: Question, option: string) {
-    formData?.set(question.id, option);
-    setActiveQuestion(q => q + 1);
+  function handleOptionSelected(question: Question, selectedOption: string) {
+    setAnswers(prevAnswers => {
+      const existingAnswer = prevAnswers.find(ans => ans.question.id === question.id);
+
+      if (existingAnswer) {
+        // Clone the existing options to avoid direct modifications
+        const updatedOptions = [...existingAnswer.options];
+
+        // Check if the option is already selected
+        if (updatedOptions.includes(selectedOption)) {
+          // Remove the option to deselect it
+          const index = updatedOptions.indexOf(selectedOption);
+          updatedOptions.splice(index, 1);
+        } else {
+          // Add the option to select it
+          updatedOptions.push(selectedOption);
+        }
+
+        // Return the updated answers array
+        return prevAnswers.map(ans =>
+          ans.question.id === question.id
+            ? { ...ans, options: updatedOptions }
+            : ans
+        );
+      } else {
+        // If there's no answer for the question yet, add it
+        return [...prevAnswers, { question, options: [selectedOption] }];
+      }
+    });
+    // setActiveQuestion(q => q + 1);
   }
 
   function handleTextInput(question: Question, text: string) {
@@ -63,8 +97,8 @@ export default function Home() {
   };
 
   function isOptionActive(question: Question, option: string) {
-    const response = formData?.get(question.id);
-    return response === option;
+    const answerForQuestion = answers.find(a => a.question.id === question.id);
+    return answerForQuestion?.options.includes(option) || false;
   }
   return (
     <main className={styles.main}>
