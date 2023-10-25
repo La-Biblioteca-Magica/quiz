@@ -3,5 +3,8 @@ export type RecommendationType = {
   title: string,
   author: string,
   description: string,
-  href: string
+  href: string,
+  pages: number,
+  genres: Genre[],
 };
+export type Genre = string;

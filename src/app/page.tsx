@@ -8,6 +8,7 @@ import React, { useEffect } from 'react';
 import { Question } from '@/types/quiz/question.types';
 import TextInput from '@/components/textInput/textInput';
 import Recommendations from '@/components/recommendations/recommendations';
+import { RECOM_MOCK } from '@/lib/recommendations/recommendations.mock';
 
 const userResponses: QuizInput = {
   genre: 'Fantasía',
@@ -158,7 +159,7 @@ export default function Home() {
           <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
         </footer>
       </form>
-      <Recommendations recommendations={undefined}></Recommendations>
+      <Recommendations recommendations={RECOM_MOCK}></Recommendations>
     </main>
   )
 }

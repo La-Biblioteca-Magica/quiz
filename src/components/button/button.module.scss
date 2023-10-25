@@ -3,6 +3,10 @@
   border-radius: 5px;
   background: linear-gradient(248deg, #06AD5D -2.85%, #A065EB 112.07%);
   width: fit-content;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: normal;
+
 }
 
 .button {
@@ -18,6 +22,10 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
+  font-size: inherit;
+  font-style: inherit;
+  line-height: normal;
+  font-weight: inherit;
 
   &.secondary {
     background: rgba(var(--raw-bg), var(--bg-opacity));
@@ -27,10 +35,10 @@
   &__children {
     color: var(--color, rgba(255, 255, 255, 0.83));
     text-align: center;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 300;
+    font-size: inherit;
+    font-style: inherit;
     line-height: normal;
+    font-weight: inherit;
   }
 
   &:hover {
