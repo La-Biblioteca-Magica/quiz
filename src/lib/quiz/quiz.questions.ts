@@ -3,7 +3,7 @@ import { Question } from "@/types/quiz/question.types";
 export const FORM_QUESTIONS: Question[] = [
   {
     title: "Género literario",
-    description: "Elige el género literario que más te atraiga o te interese.",
+    description: "Elige el género literario que más te guste.",
     id: "genre",
     options: [
       "Acción y aventura",
@@ -73,23 +73,25 @@ export const FORM_QUESTIONS: Question[] = [
     ],
   },
   {
-    title: "Tema principal",
-    description: "¿Te interesan más los temas actuales o los clásicos?",
-    id: "theme",
-    options: ["Contemporáneo", "Clásico", "Indiferente"],
-  },
-  {
     title: "Tipo de protagonista",
-    description: "¿Qué tipo de personaje principal te resulta más atractivo?",
+    description: "¿Qué tipo de personaje principal prefieres?",
     id: "protagonist",
-    options: ["Heroico", "Anti-héroe", "Cotidiano", "Histórico", "Otro"],
-  },
-  {
-    title: "Ubicación geográfica",
-    description:
-      "¿En qué región del mundo te gustaría que se desarrolle la historia?",
-    id: "location",
-    options: ["América", "Europa", "Asia", "África", "No tengo preferencia"],
+    options: [
+      "Heroico",
+      "Anti-héroe",
+      "Cotidiano",
+      "Histórico",
+      "Místico o espiritual",
+      "Villano como protagonista",
+      "Protagonista femenino fuerte",
+      "Niño/adolescente",
+      "Sabio",
+      "Explorador y aventurero",
+      "Romántico",
+      "Detective",
+      "Monstruo o criatura no humana",
+      "Alegre"
+    ],
   },
   {
     title: "Tiempo histórico",
@@ -97,11 +99,13 @@ export const FORM_QUESTIONS: Question[] = [
     id: "historicalTime",
     options: [
       "Antigüedad",
+      "Imperio Romano",
       "Edad Media",
       "Siglo XIX",
       "Siglo XX",
       "Actualidad",
       "Futuro",
+      "Realidad paralela",
     ],
   },
   {
@@ -115,6 +119,18 @@ export const FORM_QUESTIONS: Question[] = [
       "Romance",
       "Conflicto político o social",
       "Viajes en el tiempo",
+      "Criaturas míticas",
+      "Intriga",
+      "Exploración espacial",
+      "Desastres naturales o apocalipsis",
+      "Historias basadas en hechos reales",
+      "Deportes",
+      "Supervivencia",
+      "Elementos históricos",
+      "Crimen",
+      "Aventuras en la naturaleza",
+      "Temas psicológicos",
+      "Ninguno",
     ],
   },
   {
@@ -131,7 +147,7 @@ export const FORM_QUESTIONS: Question[] = [
   {
     title: "Preferencia de autores",
     description:
-      "¿Hay algún autor o autora que particularmente disfrutes o quieras evitar?",
+      "¿Hay algún autor o autora que particularmente disfrutes?",
     id: "authorPreference",
   },
   {
