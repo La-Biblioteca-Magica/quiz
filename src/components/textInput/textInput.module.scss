@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2px;
+  width: 100%;
 }
 
 .input__wrapper {
@@ -11,6 +12,7 @@
   background: linear-gradient(248deg, #06ad5d -2.85%, #a065eb 112.07%);
   width: fit-content;
   width: 100%;
+  flex-grow: 1;
 }
 
 .input {
@@ -49,6 +51,7 @@
 .answers {
   list-style-type: none;
   padding: 0;
+  width: 100%;
 
   li {
     border-radius: 3em;
