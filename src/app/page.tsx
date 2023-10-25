@@ -7,6 +7,7 @@ import { FORM_QUESTIONS } from '@/lib/quiz/quiz.questions';
 import React, { useEffect } from 'react';
 import { Question } from '@/types/quiz/question.types';
 import TextInput from '@/components/textInput/textInput';
+import Recommendations from '@/components/recommendations/recommendations';
 
 const userResponses: QuizInput = {
   genre: 'Fantasía',
@@ -47,9 +48,15 @@ export default function Home() {
     if (!formQuestionsRef.current) return;
     if (activeQuestion < 0) {
       document.scrollingElement?.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (activeQuestion >= formQuestionsRef.current.children.length) {
+      console.log('eeei');
+      document.querySelector('#recommendations')?.scrollIntoView({ behavior: 'smooth' });
+      return;
     }
     formQuestionsRef.current.children[activeQuestion]?.scrollIntoView({ behavior: 'smooth' });
-    setFormProgress(activeQuestion >= 0 ? (activeQuestion / questions.length) : 0);
+    setFormProgress(activeQuestion >= 0 ? ((activeQuestion + 1) / questions.length) : 0);
   }, [activeQuestion, questions.length]);
 
   function handleBeginQuiz() {
@@ -62,9 +69,7 @@ export default function Home() {
     const filtered = answers[existingAnswer].options.filter((values, i) => index !== i);
     const a = [...answers];
     a[existingAnswer].options = filtered;
-
     setAnswers(a)
-
   }
   function handleOptionSelected(question: Question, selectedOption: string) {
     setAnswers(prevAnswers => {
@@ -99,9 +104,9 @@ export default function Home() {
   }
 
   function handleGoNext() {
-    if (answers[activeQuestion] && answers[activeQuestion].options?.length) {
-      setActiveQuestion(q => q + 1);
-    } else { console.warn('no se pue') }
+    // if (answers[activeQuestion] && answers[activeQuestion].options?.length) {
+    setActiveQuestion(q => q + 1);
+    // } else { console.warn('no se pue') }
   };
   function handleGoBack() {
     setActiveQuestion(q => q - 1);
@@ -118,7 +123,7 @@ export default function Home() {
         <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
         <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
       </div>
-      <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0}>
+      <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0 || activeQuestion >= questions.length}>
         <div className={styles.form__questions} ref={formQuestionsRef}>
           {questions.map((question, index) => (
             <section key={question.description} className={styles.form__section}>
@@ -153,6 +158,7 @@ export default function Home() {
           <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
         </footer>
       </form>
+      <Recommendations recommendations={undefined}></Recommendations>
     </main>
   )
 }

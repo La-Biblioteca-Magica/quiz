@@ -1,0 +1,12 @@
+.recommendations {
+  height: 100svh;
+  padding-inline: var(--spacing);
+
+  header {
+    padding-block-start: 78px;
+
+    p {
+      opacity: 1;
+    }
+  }
+}
