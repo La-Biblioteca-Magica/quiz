@@ -1,6 +1,6 @@
 .splash {
   margin-block-start: 94px;
-  height: 100svh;
+  height: 100vh;
 
   &__logo {
     background: var(--bg-1);
@@ -42,11 +42,11 @@
 
   &__section {
     scroll-snap-align: start;
-    height: calc(100svh - var(--spacing));
+    height: calc(100vh - var(--spacing));
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 100svh;
+    max-height: 100vh;
 
     header {
       margin-block-start: 78px;
