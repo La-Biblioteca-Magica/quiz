@@ -2,6 +2,7 @@
 import OpenAI from "openai";
 import { books } from "@googleapis/books";
 import { Answer } from "@/app/page";
+import { RecommendationType } from "@/components/recommendations/recommendation.types";
 
 const booksApi = books({
   auth: process.env.GOOGLE_API_KEY,
@@ -27,7 +28,7 @@ export async function getGPTResponse(userInput: Answer[]) {
   try {
     const gptResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [ 
+      messages: [
         {
           role: "system",
           content:
@@ -56,18 +57,20 @@ export async function getGPTResponse(userInput: Answer[]) {
       gptResponse.choices[0].message.content
     ) as BookInfo[];
 
-    const filteredBooks = await Promise.all(
+    const filteredBooksResults = await Promise.all(
       gptBooks.map(async (book) => {
-        if (await searchBook(book)) {
-          return book;
+        const searchResult = await searchBook(book);
+        if (searchResult) {
+          return searchResult;
         }
-        return null; // Filter out books that don't have results
+        return null; // Filter out books that don't have results or return a different default value
       })
     );
+    const validResults = filteredBooksResults.filter(
+      (result): result is RecommendationType => result !== null
+    );
 
-    const validBooks = filteredBooks.filter((book) => book !== null);
-
-    return validBooks;
+    return validResults;
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -76,6 +79,7 @@ export async function getGPTResponse(userInput: Answer[]) {
 async function searchBook(book: BookInfo) {
   const searchQuery = `${book.book} inauthor:${book.author}`;
   let results;
+  let recomendations: RecommendationType | undefined;
   try {
     results = await booksApi.volumes.list({
       q: searchQuery,
@@ -85,9 +89,30 @@ async function searchBook(book: BookInfo) {
       printType: options.type.toUpperCase(), // Convertir a mayúsculas, ya que la API espera 'BOOKS', 'MAGAZINES', etc.
       key: options.key,
     });
+
+    const volumeInfo = results.data.items
+      ? results.data.items[0].volumeInfo
+      : undefined;
+
+    recomendations = {
+      img: volumeInfo?.imageLinks
+        ? volumeInfo.imageLinks.thumbnail
+          ? volumeInfo.imageLinks.thumbnail
+          : ""
+        : "",
+      title: volumeInfo?.title || "",
+      author:
+        volumeInfo?.authors && volumeInfo?.authors[0]
+          ? volumeInfo.authors[0]
+          : "",
+      description: volumeInfo?.description || "",
+      href: volumeInfo?.infoLink || "",
+      pages: volumeInfo?.pageCount || 0,
+      genres: volumeInfo?.categories || [],
+    };
   } catch (error) {
     console.log("Not found on google books", error);
   }
 
-  return results;
+  return recomendations;
 }
