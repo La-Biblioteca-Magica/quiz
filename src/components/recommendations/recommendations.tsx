@@ -93,7 +93,7 @@ export default function Recommendations({ recommendations }: { recommendations: 
     </div>
     {book && <div ref={matchRef} className={styles.match}>
       <header>
-        <h1>Amor a primera vista!!</h1>
+        <h1>¡¡Amor a primera vista!!</h1>
         <p>{book.title} · {book.author}</p>
         <img src={book.img} alt="Librito" />
       </header>
