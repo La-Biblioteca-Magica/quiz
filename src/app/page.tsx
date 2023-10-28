@@ -9,6 +9,7 @@ import TextInput from '@/components/textInput/textInput';
 import Recommendations from '@/components/recommendations/recommendations';
 import { RECOM_MOCK } from '@/lib/recommendations/recommendations.mock';
 import Modal from '@/components/modal/modal';
+import { getGPTResponse } from '@/lib/GPT/getGPTResponse';
 
 const userResponses: QuizInput = {
   genre: 'Fantasía',
@@ -24,7 +25,7 @@ const userResponses: QuizInput = {
   previousBooks: 'El Señor de los Anillos'
 };
 
-type Answer = {
+export type Answer = {
   question: Question,
   options: string[]
 }
@@ -37,7 +38,7 @@ export default function Home() {
   const [formProgress, setFormProgress] = React.useState(0);
   const [activeQuestion, setActiveQuestion] = React.useState(-1);
   const [answers, setAnswers] = React.useState<Answer[]>([])
-  const [showPopup, setShowPopup] = React.useState<boolean>(true);
+  const [showPopup, setShowPopup] = React.useState<boolean>(false);
 
   useEffect(() => {
     window.onbeforeunload = function () {
@@ -118,6 +119,10 @@ export default function Home() {
     setActiveQuestion(q => q - 1);
   };
 
+  function handleSubmit() {
+    getGPTResponse(answers)
+  }
+
 
   function isOptionActive(question: Question, option: string) {
     const answerForQuestion = answers.find(a => a.question.id === question.id);
@@ -160,6 +165,8 @@ export default function Home() {
             </section>
           ))}
         </div>
+        <Modal isOpen={showPopup} onAccept={() => handleSubmit()} onCancel={() => setShowPopup(false)} />
+
         <footer>
           <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
           {

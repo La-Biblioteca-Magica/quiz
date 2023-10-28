@@ -1,6 +1,7 @@
 "use server";
 import OpenAI from "openai";
 import { books } from "@googleapis/books";
+import { Answer } from "@/app/page";
 
 const booksApi = books({
   auth: process.env.GOOGLE_API_KEY,
@@ -22,21 +23,22 @@ const options = {
   lang: "es",
 };
 
-export async function getGPTResponse(userInput: QuizInput) {
+export async function getGPTResponse(userInput: Answer[]) {
   try {
     const gptResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [
+      messages: [ 
         {
           role: "system",
           content:
-            'Estás programado para recomendar libros basándote en las respuestas a un conjunto específico de preguntas. Al recibir las respuestas, tu objetivo es sugerir cinco libros que se adapten mejor a esas preferencias. Por favor, proporciona recomendaciones literarias en formato json en español tal que:\n\n[ {"book": "author" : "", "description": ""}]\n\nThe JSON object:\n`.trim()\n',
+            "Estás programado para recomendar libros basándote en las respuestas a un conjunto específico de preguntas. Al recibir las respuestas, tu objetivo es sugerir cinco libros que se adapten mejor a esas preferencias. Por favor, proporciona recomendaciones literarias en formato json en español: [{book: 'libro que me recomiendas', author:'autor'}]",
         },
         {
           role: "user",
           content: JSON.stringify(userInput),
         },
       ],
+
       temperature: 0,
       max_tokens: 256,
       top_p: 1,
