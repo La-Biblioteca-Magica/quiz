@@ -66,7 +66,7 @@ export default function Recommendations({ recommendations, loading }: { recommen
   return <section id="recommendations" className={styles.recommendations}>
     <header>
       <h1>Recomendaciones</h1>
-      <p>Tienes un gusto muy extraño y además hueles mal.</p>
+      <p>¡Qué gusto tan interesante! Aquí tienes algunas recomendaciones.</p>
     </header>
     {loading && <Loading></Loading>}
     {!loading && <>
