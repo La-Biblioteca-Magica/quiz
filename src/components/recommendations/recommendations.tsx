@@ -66,19 +66,26 @@ export default function Recommendations({ recommendations }: { recommendations: 
       <h1>Recomendaciones</h1>
       <p>Tienes un gusto muy extraño y además hueles mal.</p>
     </header>
-    {book && <main aria-expanded={expand} className={animations.recommendation__animated} ref={recommendationRef}>
-      <div className={styles.img__wrapper} >
+    {book && <main aria-expanded={expand}>
+      <div className={styles.img__wrapper + ' ' + animations.recommendation__animated} ref={recommendationRef}>
         <div className={styles.mask}></div>
-        <img src={book.img} alt={book.title} />
+        <img src={book.img} alt={book.title} className={styles.book__img} />
         <div className={styles.info}>
-          <p>{book.title} · {book.author}</p>
-          <p className={styles.description}>{book.description}</p>
-          <dl>
-            <dt>Páginas</dt>
-            <dd>{book.pages}</dd>
-            <dt>Género</dt>
-            <dd>{book.genres.join(', ')}</dd>
-          </dl>
+          <p className={styles.info__title}>{book.title} · {book.author}</p>
+          <div className={styles.description}>
+            <p>{book.description}</p>
+            <dl>
+              <dt>Páginas</dt>
+              <dd>{book.pages}</dd>
+              <dt>Género</dt>
+              <dd>{book.genres.join(', ')}</dd>
+            </dl>
+          </div>
+        </div>
+        <div className={styles.actions}>
+          <img src="/icons/hate.svg" alt="I do not like this book" onClick={dislikeBook} />
+          <img src="/icons/info.svg" alt="I want more info about this book" onClick={requestMoreInfo} />
+          <img src="/icons/love.svg" alt="I love this book" onClick={likeBook} />
         </div>
       </div>
     </main>}
@@ -87,11 +94,8 @@ export default function Recommendations({ recommendations }: { recommendations: 
       <p>¡Pero no te preocupes! ¡Estamos continuamente afinando nuestro algoritmo para darte los mejores resultados!</p>
       <Button action={() => reload()}>Volver a intentarlo</Button>
     </div>}
-    <div className={styles.actions}>
-      <img src="/icons/hate.svg" alt="I do not like this book" onClick={dislikeBook} />
-      <img src="/icons/info.svg" alt="I want more info about this book" onClick={requestMoreInfo} />
-      <img src="/icons/love.svg" alt="I love this book" onClick={likeBook} />
-    </div>
+
+    {/* MATCH */}
     {book && <div ref={matchRef} className={styles.match}>
       <header>
         <h1>¡¡Amor a primera vista!!</h1>

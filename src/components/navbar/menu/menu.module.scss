@@ -9,11 +9,13 @@
   place-content: center;
   transform: translateY(-50px);
   transition: transform 500ms ease, opacity 500ms ease;
+  z-index: -1;
 
   &[aria-hidden="false"] {
     pointer-events: unset;
     opacity: 1;
     transform: translateY(0);
+    z-index: 1;
   }
 
   ul {
