@@ -30,15 +30,17 @@
   &.secondary {
     background: rgba(var(--raw-bg), var(--bg-opacity));
     transition: background 150ms ease;
+    font-family: unset;
   }
 
   &__children {
-    color: var(--color, rgba(255, 255, 255, 0.83));
+    color: var(--color, white);
     text-align: center;
     font-size: inherit;
     font-style: inherit;
     line-height: normal;
     font-weight: inherit;
+    letter-spacing: 0.35px;
   }
 
   &:hover {
