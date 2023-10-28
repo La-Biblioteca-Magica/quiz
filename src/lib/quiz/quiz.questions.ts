@@ -3,7 +3,7 @@ import { Question } from "@/types/quiz/question.types";
 export const FORM_QUESTIONS: Question[] = [
   {
     title: "Género literario",
-    description: "Elige el género literario que más te guste.",
+    description: "Elige el género o los géneros literarios que más te gusten.",
     id: "genre",
     options: [
       "Acción y aventura",
@@ -74,7 +74,7 @@ export const FORM_QUESTIONS: Question[] = [
   },
   {
     title: "Tipo de protagonista",
-    description: "¿Qué tipo de personaje principal prefieres?",
+    description: "¿Qué tipo de personaje principal te gusta más en un libro?",
     id: "protagonist",
     options: [
       "Heroico",
@@ -95,7 +95,7 @@ export const FORM_QUESTIONS: Question[] = [
   },
   {
     title: "Tiempo histórico",
-    description: "¿En qué periodo histórico te gustaría que se sitúe la trama?",
+    description: "¿Te gustaría que la trama se desarrollara en una época en concreto?",
     id: "historicalTime",
     options: [
       "Antigüedad",
@@ -106,6 +106,7 @@ export const FORM_QUESTIONS: Question[] = [
       "Actualidad",
       "Futuro",
       "Realidad paralela",
+      "No tengo preferencia",
     ],
   },
   {
@@ -142,6 +143,7 @@ export const FORM_QUESTIONS: Question[] = [
       "Sencillo y directo",
       "Complejo y con profundidad",
       "Lírico y poético",
+      "No me importa",
     ],
   },
   {
