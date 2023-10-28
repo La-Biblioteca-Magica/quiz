@@ -143,8 +143,9 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.splash} id='start'>
         <Logo className={styles.splash__logo} />
-        <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
-        <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
+        <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Encuentra aquí tu siguiente libro ideal!</h1>
+        <p style={{ textAlign: 'center' }}>Completa este cuestionario para que te podamos recomendar libros en base a tus preferencias y gustos particulares. ¿A qué esperas?</p>
+        <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el cuestionario</Button>
       </div>
       <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0 || activeQuestion >= questions.length}>
         <div className={styles.form__questions} ref={formQuestionsRef}>
