@@ -121,9 +121,10 @@ export default function Home() {
   };
 
   async function handleSubmit() {
-    let recomendations = await getGPTResponse(answers)
-    if (!recomendations) return
-    setRecomendations(recomendations)
+    setShowPopup(false);
+    getGPTResponse(answers).then(data => {
+      setRecomendations(data ?? []);
+    });
     handleGoNext();
   }
 
