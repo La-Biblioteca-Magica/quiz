@@ -74,7 +74,6 @@ export default function Recommendations({ recommendations }: { recommendations: 
             ? <img src={book.img} alt={book.title} className={styles.book__img} />
             : <>Placeholder</>
         }
-        <img src={book.img} alt={book.title} className={styles.book__img} />
         <div className={styles.info}>
           <p className={styles.info__title}>{book.title} · {book.author}</p>
           <div className={styles.description}>
