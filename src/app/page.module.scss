@@ -100,6 +100,8 @@
     backdrop-filter: blur(4px);
     padding-inline: var(--spacing);
     padding-block-start: 2px;
+    max-width: var(--max-width);
+    margin-inline: auto;
 
     .form__progress {
       position: relative;

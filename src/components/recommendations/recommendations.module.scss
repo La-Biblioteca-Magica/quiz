@@ -11,12 +11,37 @@
     }
   }
 
+  .no__book {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+
+    h1 {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    p {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    &>* {
+      margin-inline: auto;
+    }
+  }
+
   main {
     .img__wrapper {
       padding: 8px;
       border-radius: 4px;
       position: relative;
       overflow: hidden;
+      max-width: 440px;
+      margin: auto;
       background-color: var(--bg-1);
 
       .mask {
@@ -41,7 +66,8 @@
         left: 8px;
         width: calc(100% - 16px);
         padding-inline: 8px;
-        top: 82%;
+        top: calc(100% - 80px);
+        overflow: hidden;
         transition: top 500ms ease;
 
         p {

@@ -7,6 +7,7 @@
   --bg-1: #272764;
   --spacing: 16px;
   --font-title: 'Playpen Sans', system-ui, 'Segoe UI', Roboto, Cantarell, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --max-width: 960px;
 }
 
 * {
@@ -25,7 +26,8 @@ body {
   margin: 0;
   background-color: var(--bg);
   color: var(--color);
-
+  max-width: var(--max-width);
+  margin-inline: auto;
 }
 
 h1,

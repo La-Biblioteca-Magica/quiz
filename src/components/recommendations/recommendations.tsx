@@ -48,9 +48,6 @@ export default function Recommendations({ recommendations }: { recommendations: 
     setTimeout(() => {
       matchRef.current?.classList.add(styles.match__fired);
     }, 700);
-    // setTimeout(() => {
-    //   bookRef.current?.classList.remove(animations.bounce);
-    // }, 200);
   }
   function hideMatch() {
     matchRef.current?.classList.remove(styles.match__fired);
@@ -59,6 +56,9 @@ export default function Recommendations({ recommendations }: { recommendations: 
   function goToBook() {
     if (!book?.href) return;
     globalThis.open(book.href, '_blank');
+  }
+  function reload() {
+    globalThis.location.reload();
   }
   return <section id="recommendations" className={styles.recommendations}>
     <header>
@@ -81,6 +81,11 @@ export default function Recommendations({ recommendations }: { recommendations: 
         </div>
       </div>
     </main>}
+    {!book && <div className={styles.no__book}>
+      <h1>No hay recomendaciones para ti :(</h1>
+      <p>¡Pero no te preocupes! ¡Estamos continuamente afinando nuestro algoritmo para darte los mejores resultados!</p>
+      <Button action={() => reload()}>Volver a intentarlo</Button>
+    </div>}
     <div className={styles.actions}>
       <img src="/icons/hate.svg" alt="I do not like this book" onClick={dislikeBook} />
       <img src="/icons/info.svg" alt="I want more info about this book" onClick={requestMoreInfo} />
