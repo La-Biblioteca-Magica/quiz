@@ -1,6 +1,5 @@
 'use client';
 import styles from './page.module.scss'
-import { getGPTResponse } from '@/lib/GPT/getGPTResponse'
 import Button from '@/components/button/button';
 import Logo from '@/components/logo/logo';
 import { FORM_QUESTIONS } from '@/lib/quiz/quiz.questions';
@@ -9,6 +8,7 @@ import { Question } from '@/types/quiz/question.types';
 import TextInput from '@/components/textInput/textInput';
 import Recommendations from '@/components/recommendations/recommendations';
 import { RECOM_MOCK } from '@/lib/recommendations/recommendations.mock';
+import Modal from '@/components/modal/modal';
 
 const userResponses: QuizInput = {
   genre: 'Fantasía',
@@ -37,6 +37,7 @@ export default function Home() {
   const [formProgress, setFormProgress] = React.useState(0);
   const [activeQuestion, setActiveQuestion] = React.useState(-1);
   const [answers, setAnswers] = React.useState<Answer[]>([])
+  const [showPopup, setShowPopup] = React.useState<boolean>(true);
 
   useEffect(() => {
     window.onbeforeunload = function () {
@@ -104,6 +105,10 @@ export default function Home() {
     // setActiveQuestion(q => q + 1);
   }
 
+  function handlePopUp(show: boolean) {
+    setShowPopup(show)
+  }
+
   function handleGoNext() {
     // if (answers[activeQuestion] && answers[activeQuestion].options?.length) {
     setActiveQuestion(q => q + 1);
@@ -112,6 +117,7 @@ export default function Home() {
   function handleGoBack() {
     setActiveQuestion(q => q - 1);
   };
+
 
   function isOptionActive(question: Question, option: string) {
     const answerForQuestion = answers.find(a => a.question.id === question.id);
@@ -124,6 +130,7 @@ export default function Home() {
         <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
         <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
       </div>
+
       <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0 || activeQuestion >= questions.length}>
         <div className={styles.form__questions} ref={formQuestionsRef}>
           {questions.map((question, index) => (
@@ -155,7 +162,15 @@ export default function Home() {
         </div>
         <footer>
           <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
-          <Button variant='primary' action={handleGoNext} className={styles.form__section__next}>Siguiente</Button>
+          {
+            activeQuestion < questions.length - 1
+              ? <Button variant='primary' action={handleGoNext} className={styles.form__section__next}>Siguiente</Button>
+              : <Button
+                className={styles.form__section__next}
+                action={() => handlePopUp(true)}>
+                Confirmas?
+              </Button>
+          }
           <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
         </footer>
       </form>
