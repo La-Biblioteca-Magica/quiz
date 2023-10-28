@@ -10,6 +10,7 @@ import Recommendations from '@/components/recommendations/recommendations';
 import { RECOM_MOCK } from '@/lib/recommendations/recommendations.mock';
 import Modal from '@/components/modal/modal';
 import { getGPTResponse } from '@/lib/GPT/getGPTResponse';
+import { RecommendationType } from '@/components/recommendations/recommendation.types';
 
 const userResponses: QuizInput = {
   genre: 'Fantasía',
@@ -39,6 +40,7 @@ export default function Home() {
   const [activeQuestion, setActiveQuestion] = React.useState(-1);
   const [answers, setAnswers] = React.useState<Answer[]>([])
   const [showPopup, setShowPopup] = React.useState<boolean>(false);
+  const [recomendations, setRecomendations] = React.useState<RecommendationType[]>([])
 
   useEffect(() => {
     window.onbeforeunload = function () {
@@ -118,8 +120,10 @@ export default function Home() {
     setActiveQuestion(q => q - 1);
   };
 
-  function handleSubmit() {
-    getGPTResponse(answers);
+  async function handleSubmit() {
+    let recomendations = await getGPTResponse(answers)
+    if (!recomendations) return
+    setRecomendations(recomendations)
     handleGoNext();
   }
 
@@ -179,7 +183,7 @@ export default function Home() {
           <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
         </footer>
       </form>
-      <Recommendations recommendations={RECOM_MOCK}></Recommendations>
+      <Recommendations recommendations={recomendations}></Recommendations>
     </main>
   )
 }

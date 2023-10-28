@@ -12,7 +12,7 @@ export default function Recommendations({ recommendations }: { recommendations: 
   useEffect(() => {
     if (!recommendations) return;
     setBook(recommendations[0])
-  }, []);
+  }, [recommendations]);
 
   function requestMoreInfo() {
     setExpand(!expand);
