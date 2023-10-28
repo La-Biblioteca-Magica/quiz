@@ -129,8 +129,6 @@ export default function Home() {
         <Logo className={styles.splash__logo} />
         <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
         <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
-        {/* <ConfirmButton></ConfirmButton> */}
-        <Modal isOpen={showPopup} onAccept={() => setShowPopup(false)} onCancel={() => setShowPopup(false)} />
       </div>
 
       <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0 || activeQuestion >= questions.length}>
