@@ -64,3 +64,7 @@ kbd {
   font-family: monospace, monospace;
   font-size: 1em;
 }
+
+p {
+  letter-spacing: 0.5px;
+}

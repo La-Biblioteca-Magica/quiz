@@ -171,16 +171,18 @@ export default function Home() {
         <Modal isOpen={showPopup} onAccept={() => handleSubmit()} onCancel={() => setShowPopup(false)} />
         <footer>
           <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
-          {
-            activeQuestion < questions.length - 1
-              ? <Button variant='primary' action={handleGoNext} className={styles.form__section__next}>Siguiente</Button>
-              : <Button
-                className={styles.form__section__next}
-                action={() => handlePopUp(true)}>
-                Confirmas?
-              </Button>
-          }
-          <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
+          <div className={styles.footer__actions}>
+            <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
+            {
+              activeQuestion < questions.length - 1
+                ? <Button variant='primary' action={handleGoNext} className={styles.form__section__next}>Siguiente</Button>
+                : <Button
+                  className={styles.form__section__next}
+                  action={() => handlePopUp(true)}>
+                  Enviar
+                </Button>
+            }
+          </div>
         </footer>
       </form>
       <Recommendations recommendations={recomendations}></Recommendations>

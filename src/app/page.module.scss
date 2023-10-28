@@ -130,8 +130,15 @@
       }
     }
 
-    &>*:not(.form__progress) {
-      width: 100%;
+    .footer__actions {
+      display: flex;
+      flex-wrap: wrap-reverse;
+      gap: 8px;
+
+      &>* {
+        flex: 1;
+        flex-basis: 200px;
+      }
     }
   }
 }
