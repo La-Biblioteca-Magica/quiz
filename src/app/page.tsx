@@ -41,6 +41,7 @@ export default function Home() {
   const [answers, setAnswers] = React.useState<Answer[]>([])
   const [showPopup, setShowPopup] = React.useState<boolean>(false);
   const [recomendations, setRecomendations] = React.useState<RecommendationType[]>([])
+  const [recommendationsLoading, setRecommendationsLoading] = React.useState(false);
 
   useEffect(() => {
     window.onbeforeunload = function () {
@@ -121,9 +122,14 @@ export default function Home() {
   };
 
   async function handleSubmit() {
+    console.debug("Generating responses...")
+    setRecommendationsLoading(true);
     setShowPopup(false);
     getGPTResponse(answers).then(data => {
-      setRecomendations(data ?? []);
+      setRecomendations(data);
+      setRecommendationsLoading(false);
+    }).catch(() => {
+      setRecommendationsLoading(false);
     });
     handleGoNext();
   }
@@ -186,7 +192,7 @@ export default function Home() {
           </div>
         </footer>
       </form>
-      <Recommendations recommendations={recomendations}></Recommendations>
+      <Recommendations recommendations={recomendations} loading={recommendationsLoading}></Recommendations>
     </main>
   )
 }

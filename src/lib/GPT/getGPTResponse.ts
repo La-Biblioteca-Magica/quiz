@@ -72,8 +72,9 @@ export async function getGPTResponse(userInput: Answer[]) {
 
     return validResults;
   } catch (error) {
-    console.error("An error occurred:", error);
+    throw error;
   }
+
 }
 
 async function searchBook(book: BookInfo) {

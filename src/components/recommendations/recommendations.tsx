@@ -5,15 +5,14 @@ import { RecommendationType } from './recommendation.types';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../button/button';
 import Loading from './loading';
-export default function Recommendations({ recommendations }: { recommendations: RecommendationType[] | undefined }) {
+export default function Recommendations({ recommendations, loading }: { recommendations: RecommendationType[] | undefined, loading: boolean }) {
   const [book, setBook] = useState<RecommendationType | undefined>(undefined);
   const matchRef = useRef<HTMLDivElement>(null);
   const recommendationRef = useRef<HTMLDivElement>(null);
   const [expand, setExpand] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (!recommendations) return;
-    setLoading(false);
+    if (!recommendations?.length) return;
     setBook(recommendations[0])
   }, [recommendations]);
 
