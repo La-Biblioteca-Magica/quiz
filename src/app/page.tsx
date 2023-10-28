@@ -56,7 +56,6 @@ export default function Home() {
       return;
     }
     if (activeQuestion >= formQuestionsRef.current.children.length) {
-      console.log('eeei');
       document.querySelector('#recommendations')?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
@@ -140,7 +139,6 @@ export default function Home() {
         <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
         <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
       </div>
-
       <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0 || activeQuestion >= questions.length}>
         <div className={styles.form__questions} ref={formQuestionsRef}>
           {questions.map((question, index) => (
@@ -171,7 +169,6 @@ export default function Home() {
           ))}
         </div>
         <Modal isOpen={showPopup} onAccept={() => handleSubmit()} onCancel={() => setShowPopup(false)} />
-
         <footer>
           <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
           {
