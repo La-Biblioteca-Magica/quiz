@@ -16,5 +16,10 @@
     font-weight: 600;
     line-height: normal;
     text-decoration: none;
+    font-family: var(--font-title);
+  }
+
+  [role="menu"] {
+    cursor: pointer;
   }
 }

@@ -39,6 +39,7 @@ export default function TextInput({ value, placeholder, className, options, onSu
   function handleKeyDown(event: React.KeyboardEvent) {
     if (!inputRef.current?.value) return;
     if (event.key === 'Enter') {
+      event.preventDefault();
       handleAddAnswer();
     }
   }
