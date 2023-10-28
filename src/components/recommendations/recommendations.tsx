@@ -7,6 +7,7 @@ import Button from '../button/button';
 export default function Recommendations({ recommendations }: { recommendations: RecommendationType[] | undefined }) {
   const [book, setBook] = useState<RecommendationType | undefined>(undefined);
   const matchRef = useRef<HTMLDivElement>(null);
+  const recommendationRef = useRef<HTMLDivElement>(null);
   const [expand, setExpand] = useState<boolean>(false);
   useEffect(() => {
     if (!recommendations) return;
@@ -16,10 +17,23 @@ export default function Recommendations({ recommendations }: { recommendations: 
   function requestMoreInfo() {
     setExpand(!expand);
   }
+
+  function _loadNextRecommendation() {
+    if (!recommendations) return;
+    setBook(prev => {
+      const prevIndex = recommendations.findIndex(r => r.href === prev?.href);
+      if (prevIndex >= 0) {
+        return recommendations[prevIndex + 1];
+      }
+    });
+  }
   function dislikeBook(event: React.MouseEvent<HTMLImageElement>) {
     (event.target as HTMLImageElement).classList.add(animations.wobble);
+    recommendationRef.current?.classList.add(animations.disappear__left);
     setTimeout(() => {
       (event.target as HTMLImageElement).classList.remove(animations.wobble);
+      recommendationRef.current?.classList.remove(animations.disappear__left);
+      _loadNextRecommendation();
     }, 700);
   }
   function likeBook(event: React.MouseEvent) {
@@ -51,7 +65,7 @@ export default function Recommendations({ recommendations }: { recommendations: 
       <h1>Recomendaciones</h1>
       <p>Tienes un gusto muy extraño y además hueles mal.</p>
     </header>
-    {book && <main aria-expanded={expand} ref={matchRef}>
+    {book && <main aria-expanded={expand} className={animations.recommendation__animated} ref={recommendationRef}>
       <div className={styles.img__wrapper} >
         <div className={styles.mask}></div>
         <img src={book.img} alt={book.title} />

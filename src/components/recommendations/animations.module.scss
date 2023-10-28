@@ -1,4 +1,26 @@
+// recommendation disappear
+.recommendation__animated {
+  transform-origin: center 250%;
+  transition-property: opacity, transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+  opacity: 1;
+}
+
+.disappear,
+.disappear__left {
+  --_rotation: 6deg;
+  transform: rotate(var(--_rotation)) translateX(-50px);
+  opacity: 0;
+
+  &__left {
+    --_rotation: -6deg;
+  }
+}
+
+
 // animation wobble
+
 /* ---------------------------------------------
  * ----------------------------------------
  * animation wobble-hor-bottom
