@@ -54,7 +54,6 @@ export default function Home() {
       return;
     }
     if (activeQuestion >= formQuestionsRef.current.children.length) {
-      console.log('eeei');
       document.querySelector('#recommendations')?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
@@ -120,7 +119,8 @@ export default function Home() {
   };
 
   function handleSubmit() {
-    getGPTResponse(answers)
+    getGPTResponse(answers);
+    handleGoNext();
   }
 
 
@@ -135,53 +135,50 @@ export default function Home() {
         <h1 className={styles.splash__title}>¿No sabes qué leer? ¡Danos dineros!</h1>
         <Button action={handleBeginQuiz} variant='secondary' className={styles.splash__action}>Empezar el test</Button>
       </div>
-      <div className={styles.form__wrapper}>
-        <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0 || activeQuestion >= questions.length}>
-          <div className={styles.form__questions} ref={formQuestionsRef}>
-            {questions.map((question, index) => (
-              <section key={question.description} className={styles.form__section}>
-                <header>
-                  <h1>{question.title}</h1>
-                  <p>{question.description}</p>
-                </header>
-                <main>
-                  {question.options && question.options.length > 0 ? (
-                    question.options.map(option => (
-                      <Button
-                        variant='secondary'
-                        action={() => handleOptionSelected(question, option)}
-                        key={option}
-                        className={styles.question}
-                        active={isOptionActive(question, option)}
-                      >
-                        {option}
-                      </Button>
-                    ))
-                  ) : (
-                    <TextInput onSubmit={(values) => handleOptionSelected(question, values)} options={{ multiple: true }} onDelete={(index) => handleOptionDelete(question, index)} />
-                  )}
-                </main>
-                <input type="hidden" name={question.id} id={question.id} />
-              </section>
-            ))}
-          </div>
-          <Modal isOpen={showPopup} onAccept={() => handleSubmit()} onCancel={() => setShowPopup(false)} />
-          <footer>
-            <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
-            {
-              activeQuestion < questions.length - 1
-                ? <Button variant='primary' action={handleGoNext} className={styles.form__section__next}>Siguiente</Button>
-                : <Button
-                  className={styles.form__section__next}
-                  action={() => handlePopUp(true)}>
-                  Confirmas?
-                </Button>
-            }
-            <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
-          </footer>
-        </form>
-      </div>
-
+      <form className={styles.form} ref={formRef} aria-hidden={activeQuestion < 0 || activeQuestion >= questions.length}>
+        <div className={styles.form__questions} ref={formQuestionsRef}>
+          {questions.map((question, index) => (
+            <section key={question.description} className={styles.form__section}>
+              <header>
+                <h1>{question.title}</h1>
+                <p>{question.description}</p>
+              </header>
+              <main>
+                {question.options && question.options.length > 0 ? (
+                  question.options.map(option => (
+                    <Button
+                      variant='secondary'
+                      action={() => handleOptionSelected(question, option)}
+                      key={option}
+                      className={styles.question}
+                      active={isOptionActive(question, option)}
+                    >
+                      {option}
+                    </Button>
+                  ))
+                ) : (
+                  <TextInput onSubmit={(values) => handleOptionSelected(question, values)} options={{ multiple: true }} onDelete={(index) => handleOptionDelete(question, index)} />
+                )}
+              </main>
+              <input type="hidden" name={question.id} id={question.id} />
+            </section>
+          ))}
+        </div>
+        <Modal isOpen={showPopup} onAccept={() => handleSubmit()} onCancel={() => setShowPopup(false)} />
+        <footer>
+          <div className={styles.form__progress} style={{ '--progress': formProgress } as React.CSSProperties}></div>
+          {
+            activeQuestion < questions.length - 1
+              ? <Button variant='primary' action={handleGoNext} className={styles.form__section__next}>Siguiente</Button>
+              : <Button
+                className={styles.form__section__next}
+                action={() => handlePopUp(true)}>
+                Confirmas?
+              </Button>
+          }
+          <Button variant='secondary' action={handleGoBack} className={styles.form__section__back}>Atrás</Button>
+        </footer>
+      </form>
       <Recommendations recommendations={RECOM_MOCK}></Recommendations>
     </main>
   )

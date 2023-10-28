@@ -31,6 +31,7 @@
 }
 
 .form {
+  --_footer-height: 140px;
   padding-inline: var(--spacing);
 
   &[aria-hidden="false"] {
@@ -42,11 +43,12 @@
 
   &__section {
     scroll-snap-align: start;
-    height: calc(100vh - var(--spacing));
+    height: calc(100svh - var(--spacing));
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 100vh;
+    max-height: 100svh;
+    padding-block-end: var(--_footer-height);
 
     header {
       margin-block-start: calc(var(--spacing) * 4);
@@ -66,7 +68,6 @@
       gap: 8px;
       flex-wrap: wrap;
       overflow-y: auto;
-      max-height: calc(100svh - 62px - 58px - 138px - 16px);
 
       .question {
         flex-grow: 1;
@@ -106,6 +107,7 @@
     padding-inline: var(--spacing);
     padding-block: 8px 16px;
     max-width: var(--max-width);
+    max-height: var(--_footer-height);
     margin-inline: auto;
 
     .form__progress {
