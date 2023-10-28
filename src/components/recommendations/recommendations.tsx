@@ -27,11 +27,11 @@ export default function Recommendations({ recommendations }: { recommendations: 
       }
     });
   }
-  function dislikeBook(event: React.MouseEvent<HTMLImageElement>) {
-    (event.target as HTMLImageElement).classList.add(animations.wobble);
+  function dislikeBook(event?: React.MouseEvent<HTMLImageElement>) {
+    (event?.target as HTMLImageElement)?.classList.add(animations.wobble);
     recommendationRef.current?.classList.add(animations.disappear__left);
     setTimeout(() => {
-      (event.target as HTMLImageElement).classList.remove(animations.wobble);
+      (event?.target as HTMLImageElement)?.classList.remove(animations.wobble);
       recommendationRef.current?.classList.remove(animations.disappear__left);
       _loadNextRecommendation();
     }, 700);
@@ -51,6 +51,7 @@ export default function Recommendations({ recommendations }: { recommendations: 
   }
   function hideMatch() {
     matchRef.current?.classList.remove(styles.match__fired);
+    dislikeBook();
   }
 
   function goToBook() {
