@@ -55,6 +55,7 @@ export default function TextInput({ value, placeholder, className, options, onSu
             onInput={handleInput}
             ref={inputRef}
             onKeyDown={handleKeyDown}
+            enterKeyHint="done"
           />
         </div>
         {options?.multiple && <Button
