@@ -37,7 +37,7 @@ export default function TextInput({ value, placeholder, className, options, onSu
     setAnswers(answers.filter((answers, i) => i !== index));
   }
   function handleKeyDown(event: React.KeyboardEvent) {
-    alert('E ' + event.key);
+    alert(event.key);
     if (!inputRef.current?.value) return;
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -56,6 +56,7 @@ export default function TextInput({ value, placeholder, className, options, onSu
             onInput={handleInput}
             ref={inputRef}
             onKeyDown={handleKeyDown}
+            inputMode='none'
           />
         </div>
         {options?.multiple && <Button
