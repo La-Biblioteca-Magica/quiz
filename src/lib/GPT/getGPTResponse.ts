@@ -23,7 +23,10 @@ const options = {
   order: "relevance",
   lang: "es",
 };
-
+export async function getChatTest() {
+  console.log(process.env.GOOGLE_API_KEY);
+  console.log(process.env.OPENAI_API_KEY);
+}
 export async function getGPTResponse(userInput: Answer[]) {
   try {
     const gptResponse = await openai.chat.completions.create({

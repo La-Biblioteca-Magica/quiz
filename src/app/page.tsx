@@ -7,24 +7,9 @@ import React, { useEffect } from 'react';
 import { Question } from '@/types/quiz/question.types';
 import TextInput from '@/components/textInput/textInput';
 import Recommendations from '@/components/recommendations/recommendations';
-import { RECOM_MOCK } from '@/lib/recommendations/recommendations.mock';
 import Modal from '@/components/modal/modal';
-import { getGPTResponse } from '@/lib/GPT/getGPTResponse';
+import { getChatTest, getGPTResponse } from '@/lib/GPT/getGPTResponse';
 import { RecommendationType } from '@/components/recommendations/recommendation.types';
-
-const userResponses: QuizInput = {
-  genre: 'Fantasía',
-  atmosphere: 'Aventurero',
-  length: 'Mediano (200-500 páginas)',
-  theme: 'Clásico',
-  protagonist: 'Heroico',
-  location: 'Europa',
-  historicalTime: 'Edad Media',
-  elements: 'Magia o elementos sobrenaturales',
-  complexity: 'Lírico y poético',
-  authorPreference: 'Tolkien',
-  previousBooks: 'El Señor de los Anillos'
-};
 
 export type Answer = {
   question: Question,
@@ -44,6 +29,7 @@ export default function Home() {
   const [recommendationsLoading, setRecommendationsLoading] = React.useState(false);
 
   useEffect(() => {
+    getChatTest();
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     }
