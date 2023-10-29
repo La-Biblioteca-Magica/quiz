@@ -8,7 +8,7 @@ import { Question } from '@/types/quiz/question.types';
 import TextInput from '@/components/textInput/textInput';
 import Recommendations from '@/components/recommendations/recommendations';
 import Modal from '@/components/modal/modal';
-import { getChatTest, getGPTResponse } from '@/lib/GPT/getGPTResponse';
+import { getGPTResponse } from '@/lib/GPT/getGPTResponse';
 import { RecommendationType } from '@/components/recommendations/recommendation.types';
 
 export type Answer = {
@@ -107,8 +107,6 @@ export default function Home() {
   };
 
   async function handleSubmit() {
-    console.log("TEST")
-    getChatTest();
     console.debug("Generating responses...");
     setRecommendationsLoading(true);
     setShowPopup(false);
