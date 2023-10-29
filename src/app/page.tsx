@@ -29,7 +29,6 @@ export default function Home() {
   const [recommendationsLoading, setRecommendationsLoading] = React.useState(false);
 
   useEffect(() => {
-    getChatTest();
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     }
@@ -108,7 +107,9 @@ export default function Home() {
   };
 
   async function handleSubmit() {
-    console.debug("Generating responses...")
+    console.log("TEST")
+    getChatTest();
+    console.debug("Generating responses...");
     setRecommendationsLoading(true);
     setShowPopup(false);
     getGPTResponse(answers).then(data => {
