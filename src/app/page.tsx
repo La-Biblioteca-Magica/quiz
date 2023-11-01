@@ -10,6 +10,7 @@ import Recommendations from '@/components/recommendations/recommendations';
 import Modal from '@/components/modal/modal';
 import { getGPTResponse } from '@/lib/GPT/getGPTResponse';
 import { RecommendationType } from '@/components/recommendations/recommendation.types';
+import { RECOM_MOCK } from '@/lib/recommendations/recommendations.mock';
 
 export type Answer = {
   question: Question,
@@ -110,12 +111,18 @@ export default function Home() {
     console.debug("Generating responses...");
     setRecommendationsLoading(true);
     setShowPopup(false);
-    getGPTResponse(answers).then(data => {
-      setRecomendations(data);
+    if (process.env.NODE_ENV === 'production') {
+      getGPTResponse(answers).then(data => {
+        setRecomendations(data);
+        setRecommendationsLoading(false);
+      }).catch(() => {
+        setRecommendationsLoading(false);
+      });
+    }
+    else {
+      setRecomendations(RECOM_MOCK);
       setRecommendationsLoading(false);
-    }).catch(() => {
-      setRecommendationsLoading(false);
-    });
+    }
     handleGoNext();
   }
 

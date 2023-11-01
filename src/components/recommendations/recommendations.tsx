@@ -63,9 +63,14 @@ export default function Recommendations({ recommendations, loading }: { recommen
   function reload() {
     globalThis.location.reload();
   }
+  function truncateDescription(description: string): string {
+    const MAX_DESCRIPTION_LENGTH = 600;
+    return description.length > MAX_DESCRIPTION_LENGTH ? description.substring(0, MAX_DESCRIPTION_LENGTH) + '...'
+      : description;
+  }
   return <section id="recommendations" className={styles.recommendations}>
     <header>
-      <h1>Recomendaciones</h1>
+      {/* <h1>Recomendaciones</h1> */}
       <p>¡Qué gusto tan interesante! Aquí tienes algunas recomendaciones.</p>
     </header>
     {loading && <Loading></Loading>}
@@ -77,7 +82,7 @@ export default function Recommendations({ recommendations, loading }: { recommen
           <div className={styles.info}>
             <p className={styles.info__title}>{book.title} · {book.author}</p>
             <div className={styles.description}>
-              <p>{book.description}</p>
+              <p>{truncateDescription(book.description)}</p>
               <dl>
                 <dt>Páginas</dt>
                 <dd>{book.pages}</dd>
