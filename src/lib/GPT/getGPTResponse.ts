@@ -32,7 +32,8 @@ export async function getGPTResponse(userInput: Answer[]) {
         {
           role: "system",
           content:
-            "Estás programado para recomendar libros basándote en las respuestas a un conjunto específico de preguntas. Al recibir las respuestas, tu objetivo es sugerir cinco libros que se adapten mejor a esas preferencias. Por favor, proporciona recomendaciones literarias en formato json en español: [{book: 'libro que me recomiendas', author:'autor'}]",
+            "Recomienda quince libros en base a las respuestas dadas. Respuesta en json: [{book: 'nombre del libro', author:'autor'}]",
+          // "Estás programado para recomendar libros basándote en las respuestas a un conjunto específico de preguntas. Al recibir las respuestas, tu objetivo es sugerir cinco libros que se adapten mejor a esas preferencias. Por favor, proporciona recomendaciones literarias en formato json en español: [{book: 'libro que me recomiendas', author:'autor'}]",
         },
         {
           role: "user",
@@ -74,7 +75,6 @@ export async function getGPTResponse(userInput: Answer[]) {
   } catch (error) {
     throw error;
   }
-
 }
 
 async function searchBook(book: BookInfo) {
