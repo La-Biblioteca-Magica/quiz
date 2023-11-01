@@ -23,7 +23,6 @@ const options = {
   order: "relevance",
   lang: "es",
 };
-
 export async function getGPTResponse(userInput: Answer[]) {
   try {
     const gptResponse = await openai.chat.completions.create({
