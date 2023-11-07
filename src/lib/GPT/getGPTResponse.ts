@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import { books } from "@googleapis/books";
 import { Answer } from "@/app/page";
 import { RecommendationType } from "@/components/recommendations/recommendation.types";
+import { generateLinkWithISBN } from "../amazon/link.generator";
 
 const booksApi = books({
   auth: process.env.GOOGLE_API_KEY,
@@ -23,8 +24,23 @@ const options = {
   order: "relevance",
   lang: "es",
 };
+
+// sorry
+function _getISBN(volumeInfo: any) {
+  if (!volumeInfo) return '';
+  const default_value = volumeInfo.title;
+  /**
+   *  industryIdentifiers: [
+    { type: 'ISBN_10', identifier: '8498729327' },
+    { type: 'ISBN_13', identifier: '9788498729320' }
+  ],
+   */
+  const type = (type: string) => { return volumeInfo.industryIdentifiers.find((id: any) => id.type === type) };
+  return type('ISBN_13')?.identifier || type('ISBN_10')?.identifier || default_value;
+}
 export async function getGPTResponse(userInput: Answer[]) {
   try {
+    console.log(process.env.OPENAI_API_KEY)
     const gptResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
@@ -106,7 +122,7 @@ async function searchBook(book: BookInfo) {
           ? volumeInfo.authors[0]
           : "",
       description: volumeInfo?.description || "",
-      href: volumeInfo?.infoLink || "",
+      href: generateLinkWithISBN(_getISBN(volumeInfo)),
       pages: volumeInfo?.pageCount || 0,
       genres: volumeInfo?.categories || [],
     };

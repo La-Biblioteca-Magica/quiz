@@ -78,9 +78,9 @@ export default function Recommendations({ recommendations, loading }: { recommen
       {book && <main aria-expanded={expand}>
         <div className={styles.img__wrapper + ' ' + animations.recommendation__animated} ref={recommendationRef}>
           <div className={styles.mask}></div>
-          <img src={book?.img || '/placeholder-book.jpg'} alt={book.title} className={styles.book__img} />
+          <img src={book?.img || '/placeholder-book.png'} alt={book.title} className={styles.book__img} />
+          <p className={styles.info__title}>{book.title} · {book.author}</p>
           <div className={styles.info}>
-            <p className={styles.info__title}>{book.title} · {book.author}</p>
             <div className={styles.description}>
               <p>{truncateDescription(book.description)}</p>
               <dl>

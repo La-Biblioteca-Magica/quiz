@@ -3,7 +3,7 @@ import { Question } from "@/types/quiz/question.types";
 export const FORM_QUESTIONS: Question[] = [
   {
     title: "Género literario",
-    description: "Elige el género o los géneros literarios que más te gusten.",
+    description: "Elige el género o los géneros literarios que más te gusten. Puedes elegir hasta un máximo de 3.",
     id: "genre",
     options: [
       "Acción y aventura",
@@ -51,7 +51,7 @@ export const FORM_QUESTIONS: Question[] = [
   },
   {
     title: "Atmósfera del libro",
-    description: "¿Qué tipo de ambiente o tono prefieres en tus lecturas?",
+    description: "¿Qué tipo de ambiente o tono prefieres en tus lecturas? Puedes elegir hasta un máximo de 3.",
     id: "atmosphere",
     options: [
       "Oscuro y misterioso",
@@ -74,7 +74,7 @@ export const FORM_QUESTIONS: Question[] = [
   },
   {
     title: "Tipo de protagonista",
-    description: "¿Qué tipo de personaje principal te gusta más en un libro?",
+    description: "¿Qué tipo de personaje principal te gusta más en un libro? Puedes elegir hasta un máximo de 3.",
     id: "protagonist",
     options: [
       "Heroico",
@@ -95,7 +95,7 @@ export const FORM_QUESTIONS: Question[] = [
   },
   {
     title: "Tiempo histórico",
-    description: "¿Te gustaría que la trama se desarrollara en una época en concreto?",
+    description: "¿Te gustaría que la trama se desarrollara en una época en concreto? Puedes elegir hasta un máximo de 3.",
     id: "historicalTime",
     options: [
       "Antigüedad",
@@ -112,7 +112,7 @@ export const FORM_QUESTIONS: Question[] = [
   {
     title: "Elementos adicionales",
     description:
-      "¿Hay algún elemento específico que te gustaría encontrar en el libro?",
+      "¿Hay algún elemento específico que te gustaría encontrar en el libro? Puedes elegir hasta un máximo de 3.",
     id: "elements",
     options: [
       "Magia o elementos sobrenaturales",
@@ -137,7 +137,7 @@ export const FORM_QUESTIONS: Question[] = [
   {
     title: "Nivel de complejidad",
     description:
-      "En cuanto al estilo y profundidad, ¿cómo prefieres tu lectura?",
+      "En cuanto al estilo y profundidad, ¿cómo prefieres tu lectura? Puedes elegir hasta un máximo de 3.",
     id: "complexity",
     options: [
       "Sencillo y directo",
@@ -149,13 +149,13 @@ export const FORM_QUESTIONS: Question[] = [
   {
     title: "Preferencia de autores",
     description:
-      "¿Hay algún autor o autora que particularmente disfrutes?",
+      "¿Hay algún autor o autora que particularmente disfrutes? Puedes elegir hasta un máximo de 3.",
     id: "authorPreference",
   },
   {
     title: "Libros anteriores",
     description:
-      "Menciona algunos libros que hayas leído recientemente y qué te parecieron.",
+      "Menciona algunos libros que hayas leído recientemente y qué te parecieron. Puedes elegir hasta un máximo de 3.",
     id: "previousBooks",
   },
 ];

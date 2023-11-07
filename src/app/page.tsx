@@ -77,7 +77,7 @@ export default function Home() {
           updatedOptions.splice(index, 1);
         } else {
           // Add the option to select it
-          updatedOptions.push(selectedOption);
+          if (updatedOptions.length <= 2) updatedOptions.push(selectedOption);
         }
 
         // Return the updated answers array
@@ -111,7 +111,7 @@ export default function Home() {
     console.debug("Generating responses...");
     setRecommendationsLoading(true);
     setShowPopup(false);
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' || true) {
       getGPTResponse(answers).then(data => {
         setRecomendations(data);
         setRecommendationsLoading(false);

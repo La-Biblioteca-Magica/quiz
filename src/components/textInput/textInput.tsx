@@ -22,7 +22,7 @@ export default function TextInput({ value, placeholder, className, options, onSu
   function handleAddAnswer() {
     if (!inputRef.current?.value) return;
     if (answers.includes(inputRef.current.value)) return;
-
+    if (answers.length >= 3) return;
     setAnswers(answers.concat(current));
     onSubmit(current);
     inputRef.current?.value ? inputRef.current.value = '' : undefined;
