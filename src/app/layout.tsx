@@ -3,6 +3,7 @@ import './globals.css'
 import Navbar from '@/components/navbar/navbar'
 import BackgroundMask from '@/components/background/background'
 import Head from 'next/head'
+import { Analytics } from '@vercel/analytics/react'
 
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
         <Navbar></Navbar>
         <div style={{ paddingTop: 78, position: 'relative', zIndex: 1 }}>{children}</div>
         <BackgroundMask></BackgroundMask>
+        <Analytics />
       </body>
     </html>
   )
