@@ -99,9 +99,11 @@ export default function Home() {
   }
 
   function handleGoNext() {
-    // if (answers[activeQuestion] && answers[activeQuestion].options?.length) {
-    setActiveQuestion(q => q + 1);
-    // } else { console.warn('no se pue') }
+    if (answers[activeQuestion] && answers[activeQuestion].options?.length) {
+      setActiveQuestion(q => q + 1);
+    } else {
+      // TODO: Advertir al usuario
+    }
   };
   function handleGoBack() {
     setActiveQuestion(q => q - 1);
@@ -111,7 +113,7 @@ export default function Home() {
     console.debug("Generating responses...");
     setRecommendationsLoading(true);
     setShowPopup(false);
-    if (process.env.NODE_ENV === 'production' || true) {
+    if (process.env.NODE_ENV === 'production') {
       getGPTResponse(answers).then(data => {
         setRecomendations(data);
         setRecommendationsLoading(false);
