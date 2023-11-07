@@ -40,7 +40,6 @@ function _getISBN(volumeInfo: any) {
 }
 export async function getGPTResponse(userInput: Answer[]) {
   try {
-    console.log(process.env.OPENAI_API_KEY)
     const gptResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
